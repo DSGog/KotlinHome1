@@ -1,1 +1,5 @@
-data class Person(val name: String, val phone: String?, val email: String?)
+data class Person(
+    val name: String,
+    val phones: MutableList<String> = mutableListOf(),
+    val emails: MutableList<String> = mutableListOf()
+)

@@ -11,7 +11,6 @@ fun main() {
             println("Неверный формат команды. Введите 'help' для получения списка команд.")
             continue
         }
-
         when (command) {
             is AddCommand -> {
                 if (command.type == "phone") {

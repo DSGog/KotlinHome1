@@ -1,3 +1,4 @@
-object HelpCommand : Command {
+object HelpCommand : Command
+{
     override fun isValid() = true
 }

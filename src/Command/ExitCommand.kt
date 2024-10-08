@@ -1,3 +1,4 @@
-object ExitCommand : Command {
+object ExitCommand : Command
+{
     override fun isValid() = true
 }

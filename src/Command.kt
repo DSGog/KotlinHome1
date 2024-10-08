@@ -24,6 +24,11 @@ fun getCommand(): Command {
         } else {
             HelpCommand
         }
+        "export" -> if (parts.size == 2) {
+            ExportCommand(parts[1])
+        } else {
+            HelpCommand
+        }
         "exit" -> ExitCommand
         "help" -> HelpCommand
         else -> HelpCommand

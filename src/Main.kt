@@ -1,3 +1,5 @@
+import java.io.File
+
 fun main() {
     val phoneBook = PhoneBook()
     println("Введите 'help' для получения списка доступных команд.")
@@ -21,25 +23,48 @@ fun main() {
             is ShowCommand -> {
                 phoneBook.show(command.name)
             }
+            is ExportCommand -> {
+                exportPhoneBook(phoneBook, command.path)
+                println("Данные экспортированы в файл ${command.path}")
+            }
             is FindCommand -> {
                 phoneBook.find(command.value)
             }
             is HelpCommand -> {
                 println("Доступные команды:")
-                println("1. addphone <Имя> <Номер телефона> - Например: addphone Andrew +123")
-                println("2. addemail <Имя> <Адрес электронной почты> - Например: addemail Andrew 123@gmail.com")
-                println("3. show <Имя> - Показать информацию о человеке")
-                println("4. find <Телефон/Email> - Найти людей по номеру телефона или email")
-                println("5. exit - Выйти из программы")
-                println("6. help - Показать доступные команды")
+                println("1. addphone <Имя> <Номер телефона> Например: addphone Andrew +789654")
+                println("2. addemail <Имя> <Адрес электронной почты> Например: addemail Andrew gb@gb.ru")
+                println("3. show <Имя>")
+                println("4. find <Телефон/Email>")
+                println("5. exit")
+                println("6. help")
+                println("7. export Например: export AndrewGB")
             }
             is ExitCommand -> {
                 println("Программа завершена.")
                 return
             }
             else -> {
-                println("Неизвестная команда. Введите 'help' для получения списка доступных команд.")
+                println("Неизвестная команда.")
             }
         }
+    }
+}
+
+fun exportPhoneBook(phoneBook: PhoneBook, filePath: String) {
+    val json = json {
+        phoneBook.getPhoneBook().values.forEach { person ->
+            addField("name", person.name)
+            addArrayField("phones", person.phones)
+            addArrayField("emails", person.emails)
+        }
+    }
+
+    try {
+        val file = File(filePath)
+        file.writeText(json)
+        println("Данные успешно экспортированы в файл $filePath")
+    } catch (e: Exception) {
+        println("Ошибка при записи в файл: ${e.message}")
     }
 }

@@ -1,5 +1,3 @@
-import java.io.File
-
 class PhoneBook {
     private val phoneBook = mutableMapOf<String, Person>()
 
@@ -47,22 +45,6 @@ class PhoneBook {
     }
     fun getPhoneBook(): Map<String, Person> {
         return phoneBook
-    }
-    fun exportPhoneBook(phoneBook: PhoneBook, filePath: String) {
-        val json = phoneBook.getPhoneBook().values.joinToString(prefix = "[", postfix = "]") { person ->
-            json {
-                addField("name", person.name)
-                addArrayField("phones", person.phones)
-                addArrayField("emails", person.emails)
-            }
-        }
-        try {
-            val file = File(filePath)
-            file.writeText(json)
-            println("Данные экспортированы в файл $filePath")
-        } catch (e: Exception) {
-            println("Ошибка при записи в файл: ${e.message}")
-        }
     }
 }
 
